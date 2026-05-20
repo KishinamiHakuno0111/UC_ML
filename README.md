@@ -2,7 +2,7 @@
 
 中文 | [English](#english)
 
-本仓库提供一个面向机组组合（Unit Commitment, UC）问题的机器学习辅助加速框架。当前版本用于受限访问和内部复现实验，因此 README 不包含未发表稿件题目、正文、回复材料或表格原文。
+本仓库提供一个面向机组组合（Unit Commitment, UC）问题的机器学习辅助加速框架。
 
 ## 项目功能
 
@@ -312,11 +312,9 @@ python convert_mat_to_npz.py
 python convert_storage_data.py
 ```
 
-## 开源和受限访问说明
+## 生成文件和运行提示
 
-大规模数据、模型权重、Excel 表格、图像、Word 文件和求解器输出不应直接提交到 git。可通过脚本重新生成，或在需要时通过私有渠道提供。
-
-如果仓库用于受限评阅，建议保持 private，只邀请编辑或评阅人账户访问。不要在 public 仓库中提交稿件正文、回复材料、作者信息或未发表题目。
+仓库只保留源码、配置和轻量级占位目录。算例文件、训练数据、模型权重、评估结果、图像和求解器日志由脚本按需生成，默认写入 `case_data/`、`training_data/`、`module_save/`、`fig_data/`、`figures/` 或当前工作目录；这些生成物已在 `.gitignore` 中排除。
 
 Gurobi 求解耗时较高。正式运行前建议使用 `--sample-count`、`--max-samples`、`--gurobi-output-flag 0` 和 `--gurobi-threads 1` 做小样本 smoke test。
 
@@ -324,7 +322,7 @@ Gurobi 求解耗时较高。正式运行前建议使用 `--sample-count`、`--ma
 
 ## English
 
-This repository provides an ML-assisted acceleration framework for Unit Commitment (UC). The current version is intended for anonymous review and internal reproducibility checks, so the README does not include any unpublished manuscript title, manuscript text, response letter, or table text.
+This repository provides an ML-assisted acceleration framework for Unit Commitment (UC).
 
 ## What This Code Does
 
@@ -634,10 +632,8 @@ python convert_mat_to_npz.py
 python convert_storage_data.py
 ```
 
-## Open-Source and Anonymous-Review Notes
+## Generated Artifacts and Runtime Notes
 
-Large datasets, trained weights, Excel tables, figures, Word files, and solver outputs are not meant to be tracked in git. Regenerate them with the scripts above or provide them through private channels when needed.
-
-For anonymous review, keep the repository private and invite only editor/reviewer accounts. Do not commit manuscript text, response letters, author-identifying information, or unpublished manuscript titles to a public repository.
+The repository keeps source code, configuration, and lightweight placeholder directories only. Case files, generated datasets, trained weights, evaluation outputs, figures, and solver logs are produced by the workflow scripts as needed and are written to `case_data/`, `training_data/`, `module_save/`, `fig_data/`, `figures/`, or the current working directory. These generated artifacts are excluded by `.gitignore`.
 
 Gurobi solves can be expensive. Use `--sample-count`, `--max-samples`, `--gurobi-output-flag 0`, and `--gurobi-threads 1` for smoke tests before launching full experiments.
