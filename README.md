@@ -40,6 +40,8 @@ UC_ML/
 
 完整文件说明见 [docs/PROJECT_MAP.md](docs/PROJECT_MAP.md)。
 
+这些运行目录通过 `.gitkeep` 在仓库中保留空目录；同时 `python -m uc_ml check` 和 `python -m uc_ml run ...` 会在运行前自动创建缺失目录。
+
 ## 环境安装
 
 当前维护的本地运行环境是 Conda 环境 `python39`。UC 求解需要安装 Gurobi 并配置有效许可证。
@@ -121,6 +123,34 @@ generate_new_input_data.py              # 或 generate_new_input_data_parallel.p
 
 ```text
 case_data/matpower/<case_name>/<YYYY-MM-DD>.json.gz
+```
+
+可使用 `download_data.py` 从 UnitCommitment.jl/MATPOWER 公开算例库下载 2017 年 365 个日算例文件。脚本会自动创建 `case_data/matpower/<case_name>/` 目录，已有文件默认跳过：
+
+```bash
+python -m uc_ml run download-case-data -- --case-name case118 --year 2017
+python -m uc_ml run download-case-data -- --case-name case300 --year 2017
+```
+
+若程序中使用的本地算例名和上游算例名不同，可用 `--output-case-name` 指定本地目录。例如本项目中 1888 节点算例的本地目录名为 `case1888rte_pro`：
+
+```bash
+python -m uc_ml run download-case-data -- ^
+  --case-name case1888rte ^
+  --output-case-name case1888rte_pro ^
+  --year 2017
+```
+
+也可以直接运行下载脚本：
+
+```bash
+python download_data.py --case-name case118 --year 2017
+```
+
+若自动下载不可用，请手动从以下 URL 模式下载对应日期文件，并保持相同目录结构：
+
+```text
+https://axavier.org/UnitCommitment.jl/0.4/instances/matpower/<case_name>/<YYYY-MM-DD>.json.gz
 ```
 
 生成储能参数：
@@ -332,6 +362,8 @@ UC_ML/
 
 See [docs/PROJECT_MAP.md](docs/PROJECT_MAP.md) for the full file map.
 
+These runtime directories are kept in the repository with `.gitkeep` placeholders. `python -m uc_ml check` and `python -m uc_ml run ...` also create missing directories before execution.
+
 ## Installation
 
 The maintained local runtime is the Conda environment named `python39`. Gurobi is required for UC solves and must have a valid license.
@@ -413,6 +445,34 @@ Case JSON files should be placed under:
 
 ```text
 case_data/matpower/<case_name>/<YYYY-MM-DD>.json.gz
+```
+
+Use `download_data.py` to download the 365 daily files for year 2017 from the public UnitCommitment.jl/MATPOWER instance repository. The script creates `case_data/matpower/<case_name>/` automatically and skips existing files by default:
+
+```bash
+python -m uc_ml run download-case-data -- --case-name case118 --year 2017
+python -m uc_ml run download-case-data -- --case-name case300 --year 2017
+```
+
+If the local case name used by this code differs from the upstream case name, pass `--output-case-name`. For example, the local 1888-bus directory is `case1888rte_pro`:
+
+```bash
+python -m uc_ml run download-case-data -- ^
+  --case-name case1888rte ^
+  --output-case-name case1888rte_pro ^
+  --year 2017
+```
+
+You can also call the downloader directly:
+
+```bash
+python download_data.py --case-name case118 --year 2017
+```
+
+If automatic download is unavailable, manually download files that follow this URL pattern and keep the same directory layout:
+
+```text
+https://axavier.org/UnitCommitment.jl/0.4/instances/matpower/<case_name>/<YYYY-MM-DD>.json.gz
 ```
 
 Generate storage parameters:

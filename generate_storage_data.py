@@ -135,6 +135,7 @@ p_dis_max = [500]*40
 
 dict_name = 'training_data'
 data_name = 'storage_data_case1888rte_200%'
+os.makedirs(dict_name, exist_ok=True)
 
 mat_path = os.path.join(dict_name, data_name + '.mat')
 npz_path = os.path.join(dict_name, data_name + '.npz')

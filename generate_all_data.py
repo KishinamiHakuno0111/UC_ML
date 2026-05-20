@@ -37,6 +37,8 @@ def generate_extra_data(new_data_num=1000, save_gap=50, line_limit_rate=1, dict_
                         case_dist='case_data', case_type='matpower', case_name='case1888rte', ptdf_date='2017-01-01',
                         new_add_num=5):
 
+    os.makedirs(dict_name, exist_ok=True)
+
     #  读取已有输入数据
     d = _load_array(os.path.join(dict_name, training_data))
     # .npz stores (S,T,B); callers expect (S,B,T)

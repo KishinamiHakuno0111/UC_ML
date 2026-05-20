@@ -1,37 +1,92 @@
+"""Download UnitCommitment.jl/MATPOWER daily case files.
+
+The solver scripts expect files under:
+
+    case_data/matpower/<local_case_name>/<YYYY-MM-DD>.json.gz
+
+By default this script downloads the 365 daily files for one upstream case and
+stores them under the same local case name.
+"""
+
+from __future__ import annotations
+
+import argparse
+from calendar import monthrange
+from pathlib import Path
+
 import requests
-import os
 
-case_name = 'case118'
-os.mkdir("case_data/matpower/" + case_name)
-data_year = '2017'
-head = 'https://axavier.org/UnitCommitment.jl/0.4/instances/matpower/' + case_name + '/'
 
-month_day = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-data_index = 0
-input_data = {}  # 输出为u(i, j, t),其中i为数据索引,j为节点编号，t为时间,未进行归一化
-output_data = {}  # 输出为u(i, j, t),其中i为数据索引,j为机组编号，t为时间
-output_data_l_enable = {}
-l_data = {}
-for month in range(1, 13):  # 循环获得日期
-    if month < 10:
-        month_str = '0' + str(month)
-    else:
-        month_str = str(month)
-    day_num = month_day[month - 1]
-    for day in range(1, day_num + 1):
-        if day < 10:
-            day_str = '0' + str(day)
-        else:
-            day_str = str(day)
-        file_name = data_year + '-' + month_str + '-' + day_str + '.json.gz'
-        url = head + file_name
-        save_path = 'case_data/matpower/' + case_name + '/' + file_name  # 请替换为你想要的路径和文件名
-        response = requests.get(url)
-        # 检查请求是否成功
+DEFAULT_BASE_URL = "https://axavier.org/UnitCommitment.jl/0.4/instances/matpower"
+
+
+def _iter_daily_filenames(year: int):
+    for month in range(1, 13):
+        for day in range(1, monthrange(year, month)[1] + 1):
+            yield f"{year:04d}-{month:02d}-{day:02d}.json.gz"
+
+
+def download_case_data(
+    case_name: str,
+    year: int = 2017,
+    case_root: str | Path = "case_data/matpower",
+    output_case_name: str | None = None,
+    base_url: str = DEFAULT_BASE_URL,
+    overwrite: bool = False,
+    timeout: int = 60,
+) -> Path:
+    """Download one case-year and return the local output directory."""
+    local_case_name = output_case_name or case_name
+    output_dir = Path(case_root) / local_case_name
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    upstream_root = f"{base_url.rstrip('/')}/{case_name}"
+    downloaded = 0
+    skipped = 0
+    for file_name in _iter_daily_filenames(year):
+        save_path = output_dir / file_name
+        if save_path.exists() and not overwrite:
+            skipped += 1
+            continue
+
+        url = f"{upstream_root}/{file_name}"
+        response = requests.get(url, timeout=timeout)
         response.raise_for_status()
+        save_path.write_bytes(response.content)
+        downloaded += 1
+        print(f"downloaded {file_name}")
 
-        with open(save_path, 'wb') as file:
-            file.write(response.content)
-        print(f"{file_name} has been downloaded")
+    print(
+        f"done: case={case_name}, local={local_case_name}, "
+        f"downloaded={downloaded}, skipped={skipped}, path={output_dir}"
+    )
+    return output_dir
 
-print('文件下载完成')
+
+def _build_arg_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--case-name", default="case118", help="Upstream MATPOWER case name.")
+    parser.add_argument(
+        "--output-case-name",
+        default=None,
+        help="Local directory name. Use this when the code uses a local alias such as case1888rte_pro.",
+    )
+    parser.add_argument("--year", type=int, default=2017, help="Data year to download.")
+    parser.add_argument("--case-root", default="case_data/matpower", help="Local root directory for case data.")
+    parser.add_argument("--base-url", default=DEFAULT_BASE_URL, help="UnitCommitment.jl MATPOWER instance base URL.")
+    parser.add_argument("--overwrite", action="store_true", help="Re-download files that already exist.")
+    parser.add_argument("--timeout", type=int, default=60, help="HTTP timeout in seconds.")
+    return parser
+
+
+if __name__ == "__main__":
+    args = _build_arg_parser().parse_args()
+    download_case_data(
+        case_name=args.case_name,
+        year=args.year,
+        case_root=args.case_root,
+        output_case_name=args.output_case_name,
+        base_url=args.base_url,
+        overwrite=args.overwrite,
+        timeout=args.timeout,
+    )

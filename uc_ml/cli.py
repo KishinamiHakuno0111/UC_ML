@@ -9,7 +9,7 @@ import sys
 from pathlib import Path
 
 from .paper_workflow import WORKFLOW_STEPS, get_step, workflow_sections
-from .paths import project_root
+from .paths import WORKFLOW_DIRECTORIES, ensure_project_directories, project_root
 from .training import TrainConfig, train_from_config
 
 
@@ -41,6 +41,7 @@ def _run_step(args: argparse.Namespace) -> int:
         )
 
     root = project_root()
+    ensure_project_directories(root)
     script_path = root / step.script
     if not script_path.exists():
         raise FileNotFoundError(script_path)
@@ -59,10 +60,10 @@ def _run_step(args: argparse.Namespace) -> int:
 def _check_environment() -> int:
     root = project_root()
     print(f"project_root: {root}")
-    required_dirs = ["case_data", "training_data", "module_save"]
-    for dirname in required_dirs:
+    directory_status = {dirname: existed for dirname, _path, existed in ensure_project_directories(root)}
+    for dirname in WORKFLOW_DIRECTORIES:
         path = root / dirname
-        status = "OK" if path.exists() else "MISSING"
+        status = "OK" if directory_status.get(dirname, False) else "CREATED"
         print(f"{status:8} {dirname}/")
 
     packages = [
@@ -115,6 +116,7 @@ def _check_environment() -> int:
 def _aggregate(args: argparse.Namespace) -> int:
     from add_new_input import aggregate_from_file
 
+    ensure_project_directories()
     aggregate_from_file(
         data_path=args.data,
         ptdf_data_path=args.ptdf,
@@ -130,6 +132,7 @@ def _aggregate(args: argparse.Namespace) -> int:
 
 
 def _train(args: argparse.Namespace) -> int:
+    ensure_project_directories()
     config = TrainConfig(
         data=args.data,
         data_dir=args.data_dir,

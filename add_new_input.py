@@ -180,6 +180,8 @@ def _save_aggregated(agg, output_data, l_data, average_load, enable_data,
                      normalization_mean=None, normalization_std=None,
                      normalization_source=None):
     """将聚合结果保存为 .npz 或 .mat。"""
+    os.makedirs(os.path.dirname(os.path.abspath(save_path)), exist_ok=True)
+
     # agg 当前为 (S, NL+1, T)，转为 (S, T, NL+1) 匹配 PyTorch 惯例
     agg_t = np.transpose(agg, (0, 2, 1))
 

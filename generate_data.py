@@ -51,6 +51,7 @@ def get_class(ptdf, active_lines, gate):
 def generate_365_data(case_dict='case_data', case_type='matpower', case_name='case1888rte', ptdf_date='2017-01-01', data_year='2017',
                       data_dist_name = 'training_data', storage_data_name = 'storage_data', new_add_num=5, magnify_rate = 1.05):
     start_time = time.time()
+    os.makedirs(data_dist_name, exist_ok=True)
     ptdf_path = case_dict+'/'+case_type+'/'+case_name+'/'+ptdf_date+'.json.gz'
     file = gzip.open(ptdf_path)
     data = json.loads(file.read())

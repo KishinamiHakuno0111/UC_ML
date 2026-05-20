@@ -349,6 +349,7 @@ def generate_extra_data_parallel(
     max_pending_factor=2,
     seed=20260428,
 ):
+    os.makedirs(dict_name, exist_ok=True)
     if num_workers is None:
         cpu_num = os.cpu_count() or 1
         num_workers = max(1, cpu_num - 1)

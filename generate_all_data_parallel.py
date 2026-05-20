@@ -230,6 +230,7 @@ def generate_extra_data_parallel(
     max_pending_factor=2,
     seed=20260428,
 ):
+    os.makedirs(dict_name, exist_ok=True)
     d = _load_array(os.path.join(dict_name, training_data))
     input_data_raw = d["input_data"]
     if input_data_raw.ndim == 3:

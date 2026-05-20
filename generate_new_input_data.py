@@ -195,6 +195,8 @@ def generate_extra_data(
     save_interval         : int，每隔多少样本保存一次
     output_suffix         : str，输出文件后缀（如 'newinput'）
     """
+    os.makedirs(dict_name, exist_ok=True)
+
     # ── 1. 加载原始数据 ───────────────────────────────────────────────
     base_data_file = f'all_training_data_{case_name}.npz'
     d = _load_array(os.path.join(dict_name, base_data_file))

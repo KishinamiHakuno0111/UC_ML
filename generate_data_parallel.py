@@ -278,6 +278,7 @@ def generate_365_data_parallel(
     torch_threads_per_worker=1,
     max_pending_factor=2,
 ):
+    os.makedirs(data_dist_name, exist_ok=True)
     start_time = time.time()
     ptdf_path = case_dict + "/" + case_type + "/" + case_name + "/" + ptdf_date + ".json.gz"
     with gzip.open(ptdf_path) as f:

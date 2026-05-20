@@ -61,6 +61,11 @@ The local maintained runtime is the Conda environment named `python39`.
    - Convert `.mat` training data and metadata: `convert_mat_to_npz.py`
    - Inspect old `.mat` data: `read_training_data.py`
 
+The standard workflow directories are `case_data/`, `case_data/matpower/`,
+`training_data/`, `module_save/`, `fig_data/`, and `figures/`. They are kept
+visible in git with `.gitkeep` files, and the CLI creates them automatically
+before running workflow commands.
+
 ## File-by-File Responsibilities
 
 | File | Role | Workflow connection | Public status |
@@ -71,7 +76,7 @@ The local maintained runtime is the Conda environment named `python39`.
 | `convert_mat_to_npz.py` | Converts legacy `.mat` training data to `.npz` and old model metadata `.mat` to JSON. | Data format cleanup for open-source release. | Utility. |
 | `convert_storage_data.py` | Converts `storage_data*.mat` files to `.npz` while keeping storage array shapes compatible. | Storage parameter compatibility. | Utility. |
 | `count_infeasible_binary_predictions.py` | Tests full prediction fixing vs high-confidence subset fixing and writes raw/summary CSV/XLSX outputs. | Feasibility comparison. | Core experiment script. |
-| `download_data.py` | Downloads daily UnitCommitment.jl/MATPOWER JSON.gz files. | Raw case-data preparation. | Legacy utility; case name is hard-coded. |
+| `download_data.py` | Downloads daily UnitCommitment.jl/MATPOWER JSON.gz files with configurable upstream and local case names. | Raw case-data preparation. | Utility, wrapped by `python -m uc_ml run download-case-data -- ...`. |
 | `do_model_test.py` | Runs four transferability comparisons: old/new, raw/aggregated model-data pairings. | Transferability comparison. | Core experiment script. |
 | `generate_all_data.py` | Serial version for augmenting base datasets with randomized load samples and UC re-solves. | Data augmentation. | Legacy serial script. |
 | `generate_all_data_parallel.py` | Parallel augmented-data generator with optional predicted initial constraints. | Data augmentation at scale. | Preferred data-generation script. |

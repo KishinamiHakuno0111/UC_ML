@@ -27,7 +27,7 @@ WORKFLOW_STEPS: tuple[WorkflowStep, ...] = (
         purpose="Download UnitCommitment.jl/MATPOWER daily case JSON files.",
         script="download_data.py",
         outputs=("case_data/matpower/<case>/*.json.gz",),
-        notes="Legacy script has hard-coded case_name; edit or replace with your own data source before running.",
+        notes="Use --case-name for the upstream case and --output-case-name when a local alias is needed.",
     ),
     WorkflowStep(
         id="make-storage",
