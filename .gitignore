@@ -112,7 +112,7 @@ venv.bak/
 .DS_Store
 Thumbs.db
 
-# Project-specific generated binaries/reports and local private work files
+# Project-specific generated binaries and reports
 *.mat
 *.npz
 *.pth
@@ -129,10 +129,6 @@ _analysis_*
 ~$*
 ~WRL*.tmp
 training_data_old/
-manuscript*
-review*
-response*
-notes_private/
 
 # Keep workflow directories visible while ignoring generated contents.
 case_data/*
