@@ -289,6 +289,18 @@ python -m uc_ml run table-vi-feasibility -- ^
   --gurobi-threads 1
 ```
 
+### Additional KNN-50 and Multi-Scenario Comparisons
+
+Two optional entry points extend the comparisons without replacing the scripts above:
+
+- `python -m uc_ml.knn50 --config docs/comparison_configs/knn50.json --smoke`: KNN-50 fixed-schedule candidates for 118/300/1354pegase and low/medium/strong coupling, with eight workers, paired accuracy/cost comparisons and measured-eight versus ideal-fifty timing.
+- `python -m uc_ml.transfer_scenarios train-evaluate --config docs/comparison_configs/transfer.json`: compare frozen/retrained raw and aggregated models on frozen 900/100/100 scenario cohorts; save four accuracy curves and frozen-aggregation-gain heatmaps.
+
+Supply the datasets and checkpoints and adjust the example paths first. See
+[Comparison Benchmarks](docs/COMPARISON_BENCHMARKS.md) for input formats, the opt-in
+accelerated training recipe, numerical-error handling, resume commands and tests.
+The new entry points use the repository's datasets and checkpoints and save results under `fig_data/`.
+
 ## Data Format
 
 New code prefers `.npz` files with PyTorch-friendly axes:

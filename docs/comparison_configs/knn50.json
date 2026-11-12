@@ -1,0 +1,66 @@
+{
+  "cases": {
+    "case118": {
+      "data": "../../training_data/all_training_data_case118_storage_data_case118_30%.npz",
+      "network": "../../case_data/matpower/case118/2017-02-01.json.gz",
+      "storage": "../../training_data/storage_data_case118_30%.npz",
+      "models": {
+        "DNN": {"path": "../../module_save/units_DNN_all_training_data_case118_storage_data_case118_30%_random_1000_50000_[256, 256, 256]_0.0002.pth", "dnn_layout": "per_period"},
+        "BiLSTM": {"path": "../../module_save/units_BiLSTM_all_training_data_case118_storage_data_case118_30%_random_1000_50000_128_0.0002.pth"},
+        "Transformer": {"path": "../../module_save/units_transformer_all_training_data_case118_storage_data_case118_30%_random_1000_50000_128_0.0002.pth"}
+      }
+    },
+    "case300": {
+      "data": "../../training_data/all_training_data_case300_storage_data_case300_60%.npz",
+      "network": "../../case_data/matpower/case300/2017-01-01.json.gz",
+      "storage": "../../training_data/storage_data_case300_60%.npz",
+      "models": {
+        "DNN": {"path": "../../module_save/units_DNN_all_training_data_case300_storage_data_case300_60%_random_1000_50000_[256, 256, 256]_0.0002.pth", "dnn_layout": "per_period"},
+        "BiLSTM": {"path": "../../module_save/units_BiLSTM_all_training_data_case300_storage_data_case300_60%_random_1000_50000_128_0.0002.pth"},
+        "Transformer": {"path": "../../module_save/units_transformer_all_training_data_case300_storage_data_case300_60%_random_1000_50000_128_0.0002.pth"}
+      }
+    },
+    "case1354pegase": {
+      "data": "../../training_data/all_training_data_case1354pegase_storage_data_case1354pegase.npz",
+      "network": "../../case_data/matpower/case1354pegase/2017-01-01.json.gz",
+      "storage": "../../training_data/storage_data_case1354pegase.npz",
+      "models": {
+        "DNN": {"path": "../../module_save/units_DNN_all_training_data_case1354pegase_storage_data_case1354pegase_random_1000_50000_[256, 256, 256]_0.0002.pth", "dnn_layout": "per_period"},
+        "BiLSTM": {"path": "../../module_save/units_BiLSTM_all_training_data_case1354pegase_storage_data_case1354pegase_random_1000_50000_128_0.0002.pth"},
+        "Transformer": {"path": "../../module_save/units_transformer_all_training_data_case1354pegase_storage_data_case1354pegase_random_1000_50000_128_0.0002.pth"}
+      }
+    },
+    "low": {
+      "data": "../../training_data/all_training_data_case1888rte_storage_data_case1888rte_0%_minud0.3.npz",
+      "network": "../../case_data/matpower/case1888rte/2017-01-01.json.gz",
+      "storage": "../../training_data/storage_data_case1888rte_0%.npz",
+      "min_time_scale": 0.3,
+      "models": {
+        "DNN": {"path": "../../module_save/units_DNN_all_training_data_case1888rte_storage_data_case1888rte_0%_minud0.3_random_1000_50000_[256, 256, 256]_0.0002.pth", "dnn_layout": "per_period"},
+        "BiLSTM": {"path": "../../module_save/units_BiLSTM_all_training_data_case1888rte_storage_data_case1888rte_0%_minud0.3_random_1000_50000_128_0.0002.pth"},
+        "Transformer": {"path": "../../module_save/units_transformer_all_training_data_case1888rte_storage_data_case1888rte_0%_minud0.3_random_1000_50000_128_0.0002.pth"}
+      }
+    },
+    "medium": {
+      "data": "../../training_data/all_training_data_case1888rte_storage_data_case1888rte_50%_minud0.7.npz",
+      "network": "../../case_data/matpower/case1888rte/2017-01-01.json.gz",
+      "storage": "../../training_data/storage_data_case1888rte_50%.npz",
+      "min_time_scale": 0.7,
+      "models": {
+        "DNN": {"path": "../../module_save/units_DNN_all_training_data_case1888rte_storage_data_case1888rte_50%_minud0.7_random_1000_50000_[256, 256, 256]_0.0002.pth", "dnn_layout": "per_period"},
+        "BiLSTM": {"path": "../../module_save/units_BiLSTM_all_training_data_case1888rte_storage_data_case1888rte_50%_minud0.7_random_1000_50000_128_0.0002.pth"},
+        "Transformer": {"path": "../../module_save/units_transformer_all_training_data_case1888rte_storage_data_case1888rte_50%_minud0.7_random_1000_50000_128_0.0002.pth"}
+      }
+    },
+    "strong": {
+      "data": "../../training_data/all_training_data_case1888rte_pro.npz",
+      "network": "../../case_data/matpower/case1888rte_pro/2017-01-01.json.gz",
+      "storage": "../../training_data/storage_data_case1888rte.npz",
+      "models": {
+        "DNN": {"path": "../../module_save/units_DNN_all_training_data_case1888rte_pro_random_1000_50000_[256, 256, 256]_0.0002.pth", "dnn_layout": "per_period"},
+        "BiLSTM": {"path": "../../module_save/units_BiLSTM_all_training_data_case1888rte_pro_random_1000_50000_128_0.0002.pth"},
+        "Transformer": {"path": "../../module_save/units_transformer_all_training_data_case1888rte_pro_random_1000_50000_128_0.0002.pth"}
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "source_data": "../../training_data/all_training_data_case1888rte_pro.npz",
+  "preprocessing": "../../training_data/transfer_source/preprocessing.npz",
+  "frozen_raw": "../../module_save/units_transformer_all_training_data_case1888rte_pro_random_1000_50000_128_0.0002.pth",
+  "frozen_aggregated": "../../module_save/units_transformer_all_training_data_case1888rte_pro_decreased_base_random_1000_50000_128_0.0002.pth",
+  "cohort_root": "../../training_data/transfer_cohorts",
+  "factors": [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 5, 6, 7, 8]
+}
